@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Quiz Python - DataAnalystHub</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 p-10">
+
+<h1 class="text-3xl font-bold mb-6 text-center">
+Quiz Python Dasar
+</h1>
+
+<form id="quizForm" class="max-w-2xl mx-auto bg-white p-6 rounded shadow">
+</form>
+
+<div class="text-center mt-6">
+<button onclick="submitQuiz()" 
+class="bg-blue-600 text-white px-6 py-2 rounded">
+Kumpulkan Jawaban
+</button>
+</div>
+
+<script>
+
+const quizData = [
+{
+question: "Apa fungsi print() dalam Python?",
+options: ["Menghapus variabel", "Menampilkan output", "Menghitung data", "Menyimpan file"],
+answer: 1
+},
+{
+question: "Tipe data untuk angka desimal adalah?",
+options: ["int", "str", "float", "bool"],
+answer: 2
+},
+{
+question: "Perulangan di Python menggunakan kata kunci?",
+options: ["repeat", "loop", "for", "iterate"],
+answer: 2
+}
+];
+
+const form = document.getElementById("quizForm");
+
+quizData.forEach((q, index) => {
+form.innerHTML += `
+<div class="mb-6">
+<p class="font-semibold mb-2">${index+1}. ${q.question}</p>
+${q.options.map((opt, i) => `
+<label class="block">
+<input type="radio" name="q${index}" value="${i}" class="mr-2">
+${opt}
+</label>
+`).join("")}
+</div>
+`;
+});
+
+function submitQuiz(){
+let score = 0;
+
+quizData.forEach((q, index) => {
+const selected = document.querySelector(`input[name="q${index}"]:checked`);
+if(selected && parseInt(selected.value) === q.answer){
+score++;
+}
+});
+
+let percent = (score / quizData.length) * 100;
+
+if(percent >= 70){
+alert("Selamat! Anda LULUS dengan nilai " + percent + "%");
+window.location.href = "../lulus.html";
+} else {
+alert("Nilai Anda " + percent + "%. Silakan coba lagi.");
+}
+}
+
+</script>
+
+</body>
+</html>
